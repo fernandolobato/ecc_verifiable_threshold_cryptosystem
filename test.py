@@ -3,7 +3,7 @@ import threshold_cryptosystem as threshold
 
 
 def test_encryption_decryption(message, t, n):
-    """
+    """ Tests that a message can be encypted and decrypted.
     """
     (s_key, p_key, s, F) = threshold.generate_threshold_parameters(t, n)
 
@@ -16,7 +16,7 @@ def test_encryption_decryption(message, t, n):
 
 
 def test_secret_shares(t, n):
-    """
+    """ Tests that each generated when splitting the secret is valid.
     """
     (s_key, p_key, s, F) = threshold.generate_threshold_parameters(t, n)
 
@@ -24,7 +24,7 @@ def test_secret_shares(t, n):
         assert(threshold.verify_secret_share(s[i], i, F))
 
 def test_key_reconstruction(t, n):
-    """
+    """ Tests that a secret key can be reconstructed.
     """
     (s_key, p_key, s, F) = threshold.generate_threshold_parameters(t, n)
     r_key = threshold.reconstruct_key(s, t)
@@ -32,7 +32,8 @@ def test_key_reconstruction(t, n):
 
 
 def test_file_write_read(t, n):
-    """
+    """ Tests that parameters being generated to file can be
+        imported again.
     """
     a = threshold.save_params_file(t, n)
     b = threshold.load_params_file()
