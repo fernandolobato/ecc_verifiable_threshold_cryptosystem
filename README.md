@@ -2,7 +2,7 @@
 
 
 Minimalistic implementation of a [Verifiable (t, n) threshold signature scheme based on elliptic curve)
-](https://link.springer.com/article/10.1007/BF02828641) with.
+](https://link.springer.com/article/10.1007/BF02828641) with python.
 
 This implementation serves as a proof of concept. DO NOT TRY TO USE THIS FOR ANY REAL USE CASE. THIS HAS NOT BEEN TESTED EXTERNALLY.
 
