@@ -35,7 +35,7 @@ def verify_secret_share(secret_share, i, F, G=SECP256k1.generator):
     """
     verify = F[0]
 
-    for j in range(1, t):
+    for j in range(1, len(F)):
         verify += pow(i+1, j) * F[j]
 
     return verify == secret_share * SECP256k1.generator
@@ -71,10 +71,11 @@ def encrypt(pub_key, message):
 
     return (P, c)
 
-def decrypt(sec_key, signature):
+
+def decrypt(sec_key, cipher):
     """
     """
-    (P, c) = signature
+    (P, c) = cipher
     H = sec_key * P
 
     message = c * pow(H.y(), -1)
@@ -82,60 +83,20 @@ def decrypt(sec_key, signature):
     return round(message)
 
 
-def string_to_int(msg):
+def generate_key():
     """
     """
-    return int(''.join([ str(ord(c)) for c in msg]))
+    return randrange(SECP256k1.order)
 
-def int_to_string(num):
+
+def generate_threshold_parameters(t, n):
     """
     """
-    num = str(num)
-    return ''.join([ chr(int(num[i:i+2])) for i in range(0,len(num),2)])
+    s_key = generate_key()
+    p_key = s_key * SECP256k1.generator
+    
+    (s, F) = secret_split(s_key, t, n)
 
-
-
-def main():
-
-
-    master_private_key = randrange(SECP256k1.order)
-    master_public_key = master_private_key * SECP256k1.generator
-
-    t = 10
-    n = 20 
-
-    secret_share, F = secret_split(master_private_key, t, n)
-
-    message = 'GERM'
-
-    msg = string_to_int(message)
-    print(msg)
-
-    ciphertext = encrypt(master_public_key, msg)
-    msg_2 = decrypt(master_private_key, ciphertext)  
-
-    print(msg_2)
-
-# for i in range(n):
-#     assert(verify_secret_share(secret_share[i],i,F))
-
-
-
-# for i in range(10):
-#     msg = random.randint(1, 1000)
-#     ciphertext = encrypt(master_public_key, msg)
-#     msg_2 = decrypt(master_private_key, ciphertext)
-#     assert(msg_2 == msg)
-
-# print(string_to_int('abc'))
-
-
-# r_key = reconstruct_key(secret_share, t)
-
-# print(r_key == master_private_key)
-
-
-if __name__ == '__main__':
-    main()
+    return (s_key, p_key, s, F) 
 
 
