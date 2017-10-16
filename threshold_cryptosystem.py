@@ -207,7 +207,7 @@ def generate_threshold_parameters(t, n):
     return (s_key, p_key, s, F) 
 
 
-def save_params_file(t, n, params=None, directory='./data', public_filename='public.csv'):
+def save_params_file(t, n, params=None, directory='./data', public_filename='public.csv', javascript_filename='public.js'):
     """ Saves all the parameters of a threshold key to a set of files in a specified directory.
         If no parameters are specified, it generates new parameters and saves them.
 
@@ -249,6 +249,7 @@ def save_params_file(t, n, params=None, directory='./data', public_filename='pub
     if not os.path.exists(directory):
         os.makedirs(directory)
     
+    # TODO : Validate consistency of params!
     if params:
         (s_k, p_k, s, F) = params
     else:
@@ -263,6 +264,18 @@ def save_params_file(t, n, params=None, directory='./data', public_filename='pub
 
     public_coeficients = ''.join([ stringify_point(p) for p in F])
     public_file.write(public_coeficients)
+
+    # write to a javascript file
+        
+    js_file = open(os.path.join(directory, javascript_filename), 'w')
+    stringify_point_js = lambda p: '[new BigNumber(\'{}\'), new BigNumber(\'{}\')]'.format(p.x(), p.y())
+
+    js_file.write('var thresholdKey = {};\n'.format(stringify_point_js(p_k)))
+
+    public_coeficients = ''.join([ stringify_point_js(p) + ',' for p in F ])[:-1]
+    js_file.write('var secretShareVerifyPublicParams = [{}];\n'.format(public_coeficients))
+
+    # en javascript stuff
 
     for i in range(len(s)):
         secret_filename = 'share_{}.txt'.format(i+1)
