@@ -1,4 +1,4 @@
-# Linkable Spontaneous Anonymous Group Signature with Elliptic Curve Cryptograhpy.
+# Verifiable (t, n) threshold signature scheme based on elliptic curve.
 
 
 Minimalistic implementation of a [Verifiable (t, n) threshold signature scheme based on elliptic curve

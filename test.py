@@ -11,7 +11,6 @@ def test_encryption_decryption(message, t, n):
 
     cipher = threshold.encrypt(p_key, message)
     _message = threshold.decrypt(r_key, cipher)
-
     assert(message == _message)
 
 
@@ -39,15 +38,26 @@ def test_file_write_read(t, n):
     b = threshold.load_params_file()
     assert(a[0] == b[0])
 
+
+def test_custom_secret_shares():
+    (s_k, p_k, s, F) = threshold.load_params_file()
+    
+    for i in range(len(s)):
+        assert(threshold.verify_secret_share(s[i], i, F))
+
+
 def main():
     message = 55555
     t = 10
     n = 25
 
-    test_encryption_decryption(message, t, n)
-    test_secret_shares(t, n)
-    test_key_reconstruction(t, n)
-    test_file_write_read(t, n)
+    # test_encryption_decryption(message, t, n)
+    # test_secret_shares(t, n)
+    # test_key_reconstruction(t, n)
+    # test_file_write_read(t, n)
+    test_custom_secret_shares()
+
+    # threshold.save_params_file(t, n)
 
 if __name__ == '__main__':
     main()

@@ -16,6 +16,7 @@ from ecdsa.util import randrange
 from ecdsa.curves import SECP256k1
 from ecdsa.ellipticcurve import Point
 from ecdsa.ecdsa import curve_secp256k1
+from ecdsa.numbertheory import inverse_mod
 
 
 def secret_split(secret, t, n, G=SECP256k1.generator, O=SECP256k1.order):
@@ -80,7 +81,7 @@ def verify_secret_share(secret_share, i, F, G=SECP256k1.generator):
     return verify == secret_share * G
 
 
-def reconstruct_key(sub_secret_share, t, G=SECP256k1.order):
+def reconstruct_key(sub_secret_share, t, O=SECP256k1.order):
     """ Reconstructs a secret from a share of sub secrets. Requires
         a subset of size t. The sub secret share is the split of the
         original split.
@@ -107,9 +108,9 @@ def reconstruct_key(sub_secret_share, t, G=SECP256k1.order):
             if h != j:
                 mult *= ( h / (h - j))
 
-        recon_key += sub_secret_share[j - 1] * int(mult)
+        recon_key += (sub_secret_share[j - 1] * int(mult)) % O
 
-    return recon_key % G
+    return recon_key % O
 
 
 def encrypt(pub_key, message, G=SECP256k1.generator, O=SECP256k1.order):
@@ -118,7 +119,7 @@ def encrypt(pub_key, message, G=SECP256k1.generator, O=SECP256k1.order):
         
         PARAMS
         ------
-            pub_key: (int) public key with which to encrypt message.
+            pub_key: (ecdsa.ellipticcurve.Point) public key with which to encrypt message.
 
             message: (int) message to be encrypted.
 
@@ -135,12 +136,12 @@ def encrypt(pub_key, message, G=SECP256k1.generator, O=SECP256k1.order):
     P = k * G
     H = k * pub_key
 
-    c = message * H.y()
+    c = message * H.y() % O
 
     return (P, c)
 
 
-def decrypt(sec_key, cipher):
+def decrypt(sec_key, cipher, O=SECP256k1.order):
     """ Descrypts a ciphertext encrypted with the corresponding public key
         to the private key being provided.
         
@@ -156,10 +157,11 @@ def decrypt(sec_key, cipher):
             message: (int) original message. 
     """
     (P, c) = cipher
+
     H = sec_key * P
 
-    message = c * pow(H.y(), -1)
-
+    message = c * inverse_mod(H.y(), O) % O
+    
     return round(message)
 
 
@@ -279,9 +281,13 @@ def save_params_file(t, n, params=None, directory='./data', public_filename='pub
 
     for i in range(len(s)):
         secret_filename = 'share_{}.txt'.format(i+1)
+        secret_filename_js = 'share_{}.js'.format(i+1)
+
         secret_file = open(os.path.join(directory, secret_filename), 'w')
+        secret_file_js = open(os.path.join(directory, secret_filename_js), 'w')
 
         secret_file.write('{}'.format(s[i]))
+        secret_file_js.write('var secret = new BigNumber("{}")'.format(s[i]))
 
     return (s_k, p_k, s, F)
 
