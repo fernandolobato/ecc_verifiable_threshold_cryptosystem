@@ -1,5 +1,5 @@
 from ecdsa.curves import SECP256k1
-import threshold_cryptosystem as threshold
+import threshold_library as threshold
 
 
 def test_encryption_decryption(message, t, n):

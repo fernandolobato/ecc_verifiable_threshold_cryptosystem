@@ -291,7 +291,7 @@ def save_params_file(t, n, params=None, directory='./data', public_filename='pub
         combined_string += '{},'.format(s[i])
         secret_file_js.write('var secret = new BigNumber("{}")'.format(s[i]))
 
-    open('secrets.txt', 'w').write(combined_string[:-1])
+    open(os.path.join(directory, 'secret.txt'), 'w').write(combined_string[:-1])
 
     return (s_k, p_k, s, F)
 
