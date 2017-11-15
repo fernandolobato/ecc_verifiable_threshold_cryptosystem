@@ -8,7 +8,7 @@ This implementation serves as a proof of concept. DO NOT TRY TO USE THIS FOR ANY
 
 
 ## Dependencies
-This is a pythonic implementation using a python [ECDSA](https://github.com/warner/python-ecdsa) ECDSA cryptography python library. Python 3.5 is required to run this. Other versions of python haven't been tested but it might work. ECDSA library is compatible with most version of python. Be sure to have python included in yout path. 
+This is a pythonic implementation using a python [ECDSA](https://github.com/warner/python-ecdsa) cryptographic python library. Python 3.5 is required to run this. Other versions of python haven't been tested but it might work. ECDSA library is compatible with most version of python. Be sure to have python included in yout path. 
 
 The only thing required to run this is argparse for the script that can generate, encrypt and decrypt.
 
@@ -54,7 +54,7 @@ This is standard ECC encryption. Encrypts a message using a given public key.
 
 TODO:
 
-    This is already implemented in threshold_library.py but not yet in the script that calls the library.
+This is already implemented in threshold_library.py but not yet in the script that calls the library.
 
 ## Test
 
@@ -75,3 +75,10 @@ Then you can verify everything works the way it should in case you modify someth
 ### Stuff used to make this:
 
  * [ECDSA](https://github.com/warner/python-ecdsa) ECDSA cryptography python library. 
+
+
+------
+
+#License
+
+MIT License
