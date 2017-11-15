@@ -42,7 +42,7 @@ Reconstructed private key: 11451241829354264638787876903588984400488428724320415
 ```
 Secretes.txt must be a file with all the t subshares on each line.
 
-### Encrypt using a threshold key
+#### Encrypt using a threshold key
 This is standard ECC encryption. Encrypts a message using a given public key.
 
 ```bash
@@ -50,7 +50,7 @@ This is standard ECC encryption. Encrypts a message using a given public key.
 ```
 
 
-### Decrypt using a reconstructe key
+#### Decrypt using a reconstructe key
 
 TODO:
 
@@ -72,7 +72,7 @@ Then you can verify everything works the way it should in case you modify someth
 
 
 
-### Stuff used to make this:
+## Stuff used to make this:
 
  * [ECDSA](https://github.com/warner/python-ecdsa) ECDSA cryptography python library. 
 
