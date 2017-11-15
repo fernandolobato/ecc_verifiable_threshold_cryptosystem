@@ -278,6 +278,7 @@ def save_params_file(t, n, params=None, directory='./data', public_filename='pub
     js_file.write('var secretShareVerifyPublicParams = [{}];\n'.format(public_coeficients))
 
     # en javascript stuff
+    combined_string = ''
 
     for i in range(len(s)):
         secret_filename = 'share_{}.txt'.format(i+1)
@@ -287,7 +288,10 @@ def save_params_file(t, n, params=None, directory='./data', public_filename='pub
         secret_file_js = open(os.path.join(directory, secret_filename_js), 'w')
 
         secret_file.write('{}'.format(s[i]))
+        combined_string += '{},'.format(s[i])
         secret_file_js.write('var secret = new BigNumber("{}")'.format(s[i]))
+
+    open('secrets.txt', 'w').write(combined_string[:-1])
 
     return (s_k, p_k, s, F)
 
