@@ -58,19 +58,7 @@ This is already implemented in threshold_library.py but not yet in the script th
 
 ## Test
 
-Testing that everything works fine can be done easily. Before running tests be sure generate a threshold cryptosystem, tests try to load one.
-
-```bash
-    $ ./threshold.py --tshares 10 --nShares 25 --folder ./data
-```
-
-Then you can verify everything works the way it should in case you modify something.
-
-```bash
-    $ python test.py
-```
-
-
+    python setup.py test
 
 ## Stuff used to make this:
 
