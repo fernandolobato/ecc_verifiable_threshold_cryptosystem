@@ -46,15 +46,15 @@ Secretes.txt must be a file with all the t subshares on each line.
 This is standard ECC encryption. Encrypts a message using a given public key.
 
 ```bash
-./threshold.py --pkfile ./data/public.csv  --msg 5 --outfile ./c.txt
+./threshold.py --pkfile ./data/public.csv  --msg "Secret" --outfile ./c.txt
 ```
 
 
-#### Decrypt using a reconstructe key
+#### Decrypt using a reconstructed key
 
-TODO:
-
-This is already implemented in threshold_library.py but not yet in the script that calls the library.
+```bash
+./threshold.py --decrypt 114512418293542646387878769035889844004884287243204154488848244878157937612245 --infile ./c.txt
+```
 
 ## Test
 
