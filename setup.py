@@ -9,7 +9,7 @@ setup(
         'threshold.py',
     ],
     install_requires=[
-        'ecdsa==0.13',
+        'ecdsa==0.13.3',
     ],
     test_suite='test',
 )
